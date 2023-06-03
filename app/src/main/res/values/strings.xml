@@ -2,4 +2,13 @@
     <string name="app_name">Народный Мониторинг</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="accept_agreements">Я принимаю соглашения</string>
+    <string name="exit">Выйти</string>
+    <string name="agreement_dialog_text">
+        Для продолжения использования вы должны принять ниже перечисленные соглашения от проекта Народный Мониторинг.
+        \nГоворя про наше приложение под андройд, то можете не беспокоится: его исходный код на все 100% является открытым.
+    </string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="user_agreement">Пользовательское соглашение</string>
+    <string name="agreement_dialog_title">Примите необходимые соглашения</string>
 </resources>

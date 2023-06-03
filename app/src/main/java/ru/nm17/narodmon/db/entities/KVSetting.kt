@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "settings")
 data class KVSetting(
-    @PrimaryKey val key: String,
-    @ColumnInfo(name = "value") val value: String,
+    @PrimaryKey val setting_key: String,
+    @ColumnInfo(name = "setting_value") val value: String,
 )
