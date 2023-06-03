@@ -77,6 +77,7 @@ import ru.nm17.narodmon.db.AppDatabase
 import ru.nm17.narodmon.db.entities.KVSetting
 import ru.nm17.narodmon.ui.elements.AgreementDialog
 import ru.nm17.narodmon.ui.elements.GenericNavScaffold
+import ru.nm17.narodmon.ui.pages.SensorsPage
 import ru.nm17.narodmon.ui.theme.NarodMonTheme
 
 @Composable
@@ -125,7 +126,7 @@ class MainActivity : ComponentActivity() {
             NarodMonTheme {
                 var agreed by remember { mutableStateOf(true) }
 
-                LaunchedEffect(key1 = "first_agreement_check", block = {
+                LaunchedEffect(key1 = Unit, block = {
                     coScope.launch(Dispatchers.IO) {
                         if (db.kvDao().getByKey("agreement_accepted")?.value != "true") {
                             agreed = false
@@ -134,23 +135,20 @@ class MainActivity : ComponentActivity() {
                 })
 
                 if (!agreed) {
-                    AgreementDialog {
-                        coScope.launch(Dispatchers.IO) {
-                            db.kvDao().setAll(KVSetting("agreement_accepted", "true"))
-                            agreed = true
+                    Scaffold {
+                        AgreementDialog {
+                            coScope.launch(Dispatchers.IO) {
+                                db.kvDao().setAll(KVSetting("agreement_accepted", "true"))
+                                agreed = true
+                            }
                         }
-                    }
-                }
-
-                if (!agreed) {
-                    Surface {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize().padding(it)
                         ) {
                             CircularProgressIndicator()
-                            Text(text = "вы не должны видеть этот текст")
+                            Text(text = stringResource(R.string.waiting_for_user_agreement))
                         }
                     }
 
@@ -170,21 +168,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun SensorsPage(navController: NavController) {
-    GenericNavScaffold(navDrawerSheet = {ModalDrawerSheet {
-        Text("Drawer title", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
-        Divider()
-        NavigationDrawerItem(
-            label = { Text(text = "Drawer Item") },
-            selected = true,
-            onClick = { /*TODO*/ }
-        )
-        // ...other drawer items
-    }}) {
-        Greeting(name = "Hello world", modifier = Modifier.padding(it))
-    }
-}
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {

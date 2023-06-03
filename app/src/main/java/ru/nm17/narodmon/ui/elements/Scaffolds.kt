@@ -3,9 +3,11 @@
 package ru.nm17.narodmon.ui.elements
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -13,7 +15,9 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -21,6 +25,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 
 /**
@@ -29,15 +36,26 @@ import kotlinx.coroutines.launch
  * TODO: Использовать для датчиков
  */
 @Composable
-fun GenericNavScaffold(navDrawerSheet: @Composable () -> Unit, content: @Composable (PaddingValues) -> Unit) {
-    var expanded = rememberDrawerState(initialValue = DrawerValue.Closed)
-    var coScope = rememberCoroutineScope();
+fun GenericNavScaffold(title: @Composable () -> Unit, content: @Composable (PaddingValues) -> Unit) {
+    val expanded = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val coScope = rememberCoroutineScope();
+    val navController = rememberNavController() // TODO: Используй меня
 
-    ModalNavigationDrawer(drawerState = expanded, drawerContent = navDrawerSheet) {
+    ModalNavigationDrawer(drawerState = expanded, drawerContent = {
+        ModalDrawerSheet {
+            Text("Drawer title", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
+            Divider()
+            NavigationDrawerItem(
+                label = { Text(text = "Drawer Item") },
+                selected = true,
+                onClick = { /*TODO*/ }
+            )
+        }
+    }) {
         Scaffold(
                 topBar = {
                     TopAppBar(
-                            title = { Text("Top App Bar") },
+                            title = title,
                             colors = TopAppBarDefaults.largeTopAppBarColors(
                                     containerColor = MaterialTheme.colorScheme.primaryContainer
                             ),
