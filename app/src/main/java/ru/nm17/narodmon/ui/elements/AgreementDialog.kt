@@ -29,7 +29,7 @@ import ru.nm17.narodmon.R
 import kotlin.system.exitProcess
 
 @Composable
-fun AgreementDialog(onClick: () -> Unit) {
+fun AgreementDialog(modifier: Modifier = Modifier, onClick: () -> Unit) {
     val uriHandler = LocalUriHandler.current
 
     AlertDialog(
@@ -83,7 +83,8 @@ fun AgreementDialog(onClick: () -> Unit) {
                 onClick = { exitProcess(0) }) {
                 Text(text = stringResource(id = R.string.exit))
             }
-        }
+        },
+        modifier = modifier
 
     )
 }

@@ -2,9 +2,13 @@
 
 package ru.nm17.narodmon.ui.elements
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Divider
@@ -14,6 +18,7 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
@@ -26,6 +31,8 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
@@ -43,13 +50,22 @@ fun GenericNavScaffold(title: @Composable () -> Unit, content: @Composable (Padd
 
     ModalNavigationDrawer(drawerState = expanded, drawerContent = {
         ModalDrawerSheet {
-            Text("Drawer title", modifier = Modifier.padding(16.dp), style = MaterialTheme.typography.titleLarge)
-            Divider()
-            NavigationDrawerItem(
-                label = { Text(text = "Drawer Item") },
-                selected = true,
-                onClick = { /*TODO*/ }
+            ListItem(
+                leadingContent = {
+                    Icon(Icons.Default.AccountCircle, contentDescription = "")
+                },
+                headlineText = { Text(text = "Гость", style = MaterialTheme.typography.titleLarge)},
+                modifier = Modifier.height(72.dp)
             )
+            Divider()
+            Column(modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp)) {
+                NavigationDrawerItem(
+                    label = { Text(text = "Drawer Item") },
+                    selected = true,
+                    onClick = { /*TODO*/ }
+                )
+            }
+
         }
     }) {
         Scaffold(
