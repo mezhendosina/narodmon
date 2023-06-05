@@ -15,4 +15,7 @@
     <string name="agreement_dialog_title">Примите необходимые соглашения</string>
     <string name="sensors_page_title">Сенсоры</string>
     <string name="waiting_for_user_agreement">Ожидаю соглашение пользователя</string>
+    <string name="sensors_filter_all">Все</string>
+    <string name="sensors_filter_temp">Термометры</string>
+    <string name="sensors_filter_camera">Камеры</string>
 </resources>
