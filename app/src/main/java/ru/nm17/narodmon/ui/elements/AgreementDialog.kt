@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import ru.nm17.narodmon.R
 import kotlin.system.exitProcess
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgreementDialog(modifier: Modifier = Modifier, onClick: () -> Unit) {
     val uriHandler = LocalUriHandler.current

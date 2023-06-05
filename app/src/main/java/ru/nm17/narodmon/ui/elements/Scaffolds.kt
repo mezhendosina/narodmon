@@ -60,7 +60,7 @@ fun GenericNavScaffold(title: @Composable () -> Unit, content: @Composable (Padd
                 leadingContent = {
                     Icon(Icons.Default.AccountCircle, contentDescription = "")
                 },
-                headlineText = { Text(text = "Гость", style = MaterialTheme.typography.titleLarge)},
+                headlineContent = { Text(text = "Гость", style = MaterialTheme.typography.titleLarge)},
                 modifier = Modifier.height(72.dp)
             )
             Divider()

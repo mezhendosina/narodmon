@@ -16,8 +16,10 @@ import io.ktor.http.headers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.take
 import kotlinx.datetime.Clock
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
@@ -120,7 +122,7 @@ class Client private constructor(
         val client = this.httpClient1Min
         return flow<Result4k<AppInitResponse, APIError>> {
 
-            val resp = client.post("https://narodmon.ru/api") {
+            val resp = this@Client.httpClient1Min.take(1).first().post("https://narodmon.ru/api") {
                 contentType(ContentType.Application.Json)
                 setBody(
                     getJSONRequestBody("appInit", request)
@@ -132,7 +134,7 @@ class Client private constructor(
         }.flowOn(Dispatchers.IO)
 
     }
-    public fun appInit(request: AppInitRequest): Flow<Result4k<AppInitResponse, APIError>> {
+    /*public fun jjhgjhg(request: AppInitRequest): Flow<Result4k<AppInitResponse, APIError>> {
         val client = this.httpClient1Min
         return flow<Result4k<AppInitResponse, APIError>> {
 
@@ -147,5 +149,5 @@ class Client private constructor(
 
         }.flowOn(Dispatchers.IO)
 
-    }
+    }*/
 }
