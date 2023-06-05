@@ -12,7 +12,6 @@ import ovh.plrapps.mapcompose.api.addLayer
 import ovh.plrapps.mapcompose.core.TileStreamProvider
 import ovh.plrapps.mapcompose.ui.state.MapState
 import java.io.InputStream
-import java.net.URL
 
 class MapViewModel : ViewModel() {
     private val client = HttpClient(CIO)
@@ -21,8 +20,14 @@ class MapViewModel : ViewModel() {
         requestTile(row, col, zoom)
     }
 
+    private val mapSize = 32768
     val state: MapState by mutableStateOf(
-        MapState(4, 4096, 4096).apply {
+        MapState(
+            levelCount = 8,
+            fullWidth = mapSize,
+            fullHeight = mapSize,
+            workerCount = 16,
+        ).apply {
             addLayer(tileStreamProvider)
         }
     )
