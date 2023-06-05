@@ -123,6 +123,12 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
+
+    // Ktor
+    val ktor_version = "2.3.1"
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
+
     implementation(platform("dev.forkhandles:forkhandles-bom:2.6.0.0"))
     implementation("dev.forkhandles:result4k")
 
@@ -143,5 +149,6 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
-
+    // Map Compose library
+    implementation("ovh.plrapps:mapcompose:2.7.1")
 }

@@ -2,9 +2,6 @@
 
 package ru.nm17.narodmon.ui.elements
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -22,9 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.activity.ComponentActivity
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.core.content.ContextCompat.startActivity
 import ru.nm17.narodmon.R
 import kotlin.system.exitProcess
 
@@ -40,7 +35,7 @@ fun AgreementDialog(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 Text(text = stringResource(id = R.string.agreement_dialog_text))
                 Divider(Modifier.padding(vertical = 8.dp))
                 ListItem(
-                    headlineText = {
+                    headlineContent = {
                         Text(
                             text = stringResource(id = R.string.privacy_policy),
                             style = MaterialTheme.typography.titleSmall
@@ -56,7 +51,7 @@ fun AgreementDialog(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 )
 
                 ListItem(
-                    headlineText = {
+                    headlineContent = {
                         Text(
                             text = stringResource(id = R.string.user_agreement),
                             style = MaterialTheme.typography.titleSmall

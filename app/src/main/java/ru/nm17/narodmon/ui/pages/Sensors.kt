@@ -1,46 +1,97 @@
 package ru.nm17.narodmon.ui.pages
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import ru.nm17.narodmon.Greeting
+import ovh.plrapps.mapcompose.api.scale
+import ovh.plrapps.mapcompose.api.setScroll
+import ovh.plrapps.mapcompose.ui.MapUI
 import ru.nm17.narodmon.R
 import ru.nm17.narodmon.ui.elements.GenericNavScaffold
+import ru.nm17.narodmon.ui.viewmodel.MapViewModel
+
+enum class SensorsFilter {
+    All, Thermometer, Camera,
+}
 
 @ExperimentalMaterial3Api
 @Composable
 fun SensorsPage(navController: NavController) {
+    val mapVM by remember { mutableStateOf(MapViewModel()) }
+    var filter by remember { mutableStateOf(SensorsFilter.All) }
+
+    val scrConfig = LocalConfiguration.current
+    val mapHeight = scrConfig.screenHeightDp / 3
+    
+    LaunchedEffect(mapVM) {
+        // TODO: Подгружать сохранённую позицию
+        mapVM.state.setScroll(Offset(28702.6F, 14787.6F))
+        mapVM.state.scale = 1.4658884F
+    }
+
     GenericNavScaffold(
         title = { Text(text = stringResource(R.string.sensors_page_title)) }
     ) {
-        Column {
-            Greeting("Hello sensors")
-            Row {
-                FilterChip(
-                    selected = true,
-                    onClick = { },
-                    label = { Text("Temp") }
+        Column(modifier = Modifier.padding(it)) {
+
+            MapUI(state = mapVM.state, modifier = Modifier.height(mapHeight.dp))
+
+            Row(
+                modifier = Modifier.padding(horizontal = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                SensorsFilterChip(
+                    name = stringResource(R.string.sensors_filter_all),
+                    checkFilter = { filter == SensorsFilter.All },
+                    updateFilter = { filter = SensorsFilter.All },
                 )
 
-                FilterChip(
-                    selected = false,
-                    onClick = { },
-                    label = { Text("Abc") }
+                SensorsFilterChip(
+                    name = stringResource(R.string.sensors_filter_temp),
+                    checkFilter = { filter == SensorsFilter.Thermometer },
+                    updateFilter = { filter = SensorsFilter.Thermometer },
                 )
 
-                FilterChip(
-                    selected = false,
-                    onClick = { },
-                    label = { Text("Def") }
+                SensorsFilterChip(
+                    name = stringResource(R.string.sensors_filter_camera),
+                    checkFilter = { filter == SensorsFilter.Camera },
+                    updateFilter = { filter = SensorsFilter.Camera },
                 )
             }
+
+            //Text(mapVM.state.scroll.toString())
+            //Text(mapVM.state.scale.toString())
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SensorsFilterChip(
+    name: String,
+    checkFilter: () -> Boolean,
+    updateFilter: () -> Unit,
+) {
+    FilterChip(
+        selected = checkFilter(),
+        onClick = updateFilter,
+        label = { Text(name) },
+    )
 }
