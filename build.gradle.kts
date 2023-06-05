@@ -6,4 +6,5 @@ plugins {
     id("com.google.devtools.ksp") version "1.8.21-1.0.11" apply false
 
 }
+
 true // Needed to make the Suppress annotation work for the plugins block
