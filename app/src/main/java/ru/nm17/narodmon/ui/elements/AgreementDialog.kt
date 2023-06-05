@@ -33,7 +33,7 @@ fun AgreementDialog(modifier: Modifier = Modifier, onClick: () -> Unit) {
     val uriHandler = LocalUriHandler.current
 
     AlertDialog(
-        onDismissRequest = { /* Ничего не делаем пока пользователь не примет соглашение. */ },
+        onDismissRequest = { /* Делаем ничего пока пользователь не примет соглашение. */ },
         title = { Text(text = stringResource(id = R.string.agreement_dialog_title)) },
         text = {
             Column {

@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
 enum class NarodMonLanguages(val value: String) {
     Russian("ru"),
     English("en"),
-    Uk("uk")
+    Ukrainian("uk")
 }
 
 @Serializable
 data class MandatoryParams(
-    var cmd: String,
-    var lang: NarodMonLanguages,
+    var cmd: String?,
+    var lang: String,
     var uuid: String,
-    var apiKey: String,
+    var apiKey: String?,
 )

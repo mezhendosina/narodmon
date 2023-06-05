@@ -29,12 +29,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
@@ -47,6 +49,10 @@ fun GenericNavScaffold(title: @Composable () -> Unit, content: @Composable (Padd
     val expanded = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coScope = rememberCoroutineScope();
     val navController = rememberNavController() // TODO: Используй меня
+
+    LaunchedEffect(key1 = Unit) {
+        delay(1000)
+    }
 
     ModalNavigationDrawer(drawerState = expanded, drawerContent = {
         ModalDrawerSheet {

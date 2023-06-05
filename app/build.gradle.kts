@@ -1,4 +1,3 @@
-
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidApplication)
@@ -6,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
     kotlin("plugin.serialization") version "1.8.21"
 }
+
 
 android {
     namespace = "ru.nm17.narodmon"
@@ -27,7 +27,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -62,6 +65,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.androidx.datastore.core.android)
     implementation(libs.androidx.room.common)
+    implementation(libs.androidx.security.crypto.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -118,6 +122,26 @@ dependencies {
     implementation("androidx.room:room-paging:$room_version")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+
+    implementation(platform("dev.forkhandles:forkhandles-bom:2.6.0.0"))
+    implementation("dev.forkhandles:result4k")
+
+    implementation("io.ktor:ktor-client-core:2.3.1")
+    implementation("io.ktor:ktor-client-okhttp:2.3.1")
+
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
+
+    // For Identity Credential APIs
+    implementation("androidx.security:security-identity-credential:1.0.0-alpha03")
+
+    // For App Authentication APIs
+    implementation("androidx.security:security-app-authenticator:1.0.0-alpha02")
+
+    // For App Authentication API testing
+    androidTestImplementation("androidx.security:security-app-authenticator:1.0.0-alpha01")
+
+
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
 
 }
