@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 
@@ -38,7 +39,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun GenericNavScaffold(title: @Composable () -> Unit, content: @Composable (PaddingValues) -> Unit) {
     val expanded = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val coScope = rememberCoroutineScope();
+    val coScope = rememberCoroutineScope()
     val navController = rememberNavController() // TODO: Используй меня
 
     ModalNavigationDrawer(drawerState = expanded, drawerContent = {
@@ -48,34 +49,32 @@ fun GenericNavScaffold(title: @Composable () -> Unit, content: @Composable (Padd
             NavigationDrawerItem(
                 label = { Text(text = "Drawer Item") },
                 selected = true,
-                onClick = { /*TODO*/ }
+                onClick = { navController.navigate("sensors") }
             )
         }
     }) {
         Scaffold(
-                topBar = {
-                    TopAppBar(
-                            title = title,
-                            colors = TopAppBarDefaults.largeTopAppBarColors(
-                                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                            ),
-                            navigationIcon = {
-                                IconButton(onClick = { coScope.launch { expanded.open() } }) {
-                                    Icon(Icons.Filled.Menu, contentDescription = null)
-                                }
-                            },
-                    )
-                },
-                floatingActionButtonPosition = FabPosition.End,
-                floatingActionButton = {
-                    FloatingActionButton(onClick = {}) {
-                        Icon(imageVector = Icons.Default.Add, contentDescription = "fab icon")
-                    }
-                },
-                //drawerContent = { Text(text = "Drawer Menu 1") },
-                content = content,
-
+            topBar = {
+                TopAppBar(
+                    title = title,
+                    colors = TopAppBarDefaults.largeTopAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer
+                    ),
+                    navigationIcon = {
+                        IconButton(onClick = { coScope.launch { expanded.open() } }) {
+                            Icon(Icons.Filled.Menu, contentDescription = null)
+                        }
+                    },
                 )
+            },
+            floatingActionButtonPosition = FabPosition.End,
+            floatingActionButton = {
+                FloatingActionButton(onClick = {}) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "fab icon")
+                }
+            },
+            //drawerContent = { Text(text = "Drawer Menu 1") },
+            content = content,
+        )
     }
-
 }

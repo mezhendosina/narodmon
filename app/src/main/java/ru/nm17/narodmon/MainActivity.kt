@@ -85,14 +85,12 @@ fun AppNavHost() {
     val navController = rememberNavController()
     val coScope = rememberCoroutineScope()
 
-
-
     NavHost(navController = navController, startDestination = "sensors") {
         composable("agreement") {
 
         }
-        composable("sensors") {
 
+        composable("sensors") {
             SensorsPage(navController)
         }
 
@@ -104,22 +102,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         val db = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "data"
         ).build()
 
-
-
-
-
         setContent {
             val coScope = rememberCoroutineScope()
-
-
-
-
 
             //var asd = getPreferences()
 
@@ -156,19 +145,12 @@ class MainActivity : ComponentActivity() {
                     AppNavHost()
                 }
 
-
-
                 // A surface container using the 'background' color from the theme
-
-
-
 
             }
         }
     }
 }
-
-
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
@@ -182,8 +164,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun NavHolderEl() {
     //NavHost(navController = NavHostController(N), graph =)
 }
-
-
 
 @Preview(showBackground = true)
 @Composable
