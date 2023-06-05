@@ -119,6 +119,11 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
+    // Ktor
+    val ktor_version = "2.3.1"
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
+
     // Map Compose library
     implementation("ovh.plrapps:mapcompose:2.7.1")
 }
