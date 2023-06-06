@@ -42,4 +42,5 @@
     <string name="filter_signal">Сигнал в dBm</string>
     <string name="filter_water_meter">Счётчик воды</string>
     <string name="filter_time">Время работы</string>
+    <string name="sensors_filter_title">Тип датчиков</string>
 </resources>

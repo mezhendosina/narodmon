@@ -1,12 +1,16 @@
 package ru.nm17.narodmon.ui.pages
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.ModalBottomSheet
@@ -21,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ru.nm17.narodmon.R
 import ru.nm17.narodmon.ui.elements.GenericNavScaffold
@@ -39,7 +44,7 @@ fun SensorsPage(navController: NavController) {
     var filterShown by remember { mutableStateOf(false) }
     var filterMine by remember { mutableStateOf(false) }
 
-    val filterItems = listOf<String>(
+    val filterItems = listOf(
         stringResource(R.string.filter_temp),
         stringResource(R.string.filter_temp_water),
         stringResource(R.string.filter_temp_ground),
@@ -82,9 +87,7 @@ fun SensorsPage(navController: NavController) {
                 onQueryChange = { query -> searchQuery = query },
                 onSearch = { searchActive = false },
                 placeholder = { Text(stringResource(R.string.search)) },
-                modifier = Modifier
-                    //.padding(horizontal = 8.dp)
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {}
 
             Row(
@@ -112,7 +115,32 @@ fun SensorsPage(navController: NavController) {
 
     if (filterShown) {
         ModalBottomSheet(onDismissRequest = { filterShown = false }) {
-            Text(text = "Hello")
+            Text(
+                text = stringResource(R.string.sensors_filter_title),
+                fontSize = 26.sp,
+            )
+
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(horizontal = 4.dp),
+            ) {
+                items(filterItems) {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { }
+                    ) {
+                        Text(
+                            text = it,
+                            fontSize = 18.sp,
+                            modifier = Modifier.padding(
+                                horizontal = 8.dp,
+                                vertical = 16.dp,
+                            ),
+                        )
+                    }
+                }
+            }
         }
     }
 }
