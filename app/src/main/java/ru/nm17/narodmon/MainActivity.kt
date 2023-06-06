@@ -41,6 +41,7 @@ import ru.nm17.narodmon.ui.pages.SensorsPage
 import ru.nm17.narodmon.ui.theme.NarodMonTheme
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppNavHost() {
     val navController = rememberNavController()
