@@ -18,4 +18,6 @@
     <string name="sensors_filter_all">Все</string>
     <string name="sensors_filter_temp">Термометры</string>
     <string name="sensors_filter_camera">Камеры</string>
+    <string name="search">Поиск</string>
+    <string name="sensors_filter">Фильтр</string>
 </resources>
