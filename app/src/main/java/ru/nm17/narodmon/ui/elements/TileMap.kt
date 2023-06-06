@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.utils.io.jvm.javaio.toInputStream
@@ -22,7 +22,7 @@ import java.io.InputStream
 
 const val mapSize = 32768
 
-val client = HttpClient(CIO)
+val client = HttpClient(OkHttp)
 val tileStreamProvider = TileStreamProvider { row, col, zoom ->
     requestTile(row, col, zoom)
 }
