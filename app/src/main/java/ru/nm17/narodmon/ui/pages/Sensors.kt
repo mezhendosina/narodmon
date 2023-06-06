@@ -17,15 +17,16 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -33,7 +34,11 @@ import ru.nm17.narodmon.R
 import ru.nm17.narodmon.ui.elements.GenericNavScaffold
 import ru.nm17.narodmon.ui.elements.TileMap
 
-data class SensorFilter(val stringRes: Int, val code: Int, var enabled: Boolean = false)
+data class SensorFilter(
+    val stringRes: Int,
+    val code: Int,
+    var enabled: MutableState<Boolean> = mutableStateOf(false),
+)
 
 @ExperimentalMaterial3Api
 @Composable
@@ -45,7 +50,7 @@ fun SensorsPage(navController: NavController) {
     var filterMine by remember { mutableStateOf(false) }
 
     val filterItems = remember {
-        mutableListOf(
+        listOf(
             /* TODO:
              *  Заменить `code` на настоящее значение
              *  либо динамически его подгружать из ответа АПИ
@@ -121,13 +126,18 @@ fun SensorsPage(navController: NavController) {
 
     if (filterShown) {
         ModalBottomSheet(onDismissRequest = { filterShown = false }) {
-            Text(
-                text = stringResource(R.string.sensors_filter_title),
-                fontSize = 26.sp,
-            )
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    text = stringResource(R.string.sensors_filter_title),
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight(500),
+                )
+            }
 
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.padding(horizontal = 4.dp),
             ) {
                 items(filterItems) {
@@ -135,18 +145,17 @@ fun SensorsPage(navController: NavController) {
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Checkbox(
-                            checked = it.enabled,
-                            onCheckedChange = { checked -> it.enabled = checked },
+                            checked = it.enabled.value,
+                            onCheckedChange = { checked ->
+                                it.enabled.value = checked
+                            },
                         )
-
                         Text(
                             text = stringResource(id = it.stringRes),
                             modifier = Modifier.clickable {
-                                it.enabled = !it.enabled
+                                it.enabled.value = !it.enabled.value
                             }
                         )
-
-                        Text(text = it.toString())
                     }
                 }
             }
