@@ -180,6 +180,17 @@ fun SensorsPage(navController: NavController) {
 
     if (sortingShow) {
         ModalBottomSheet(onDismissRequest = { sortingShow = false }) {
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    text = stringResource(R.string.sensors_sort_title),
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight(500),
+                )
+            }
+            
             LazyColumn(
                 modifier = Modifier.padding(horizontal = 4.dp),
             ) {
