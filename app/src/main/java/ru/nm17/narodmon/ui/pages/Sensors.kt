@@ -44,6 +44,7 @@ import ru.nm17.narodmon.R
 import ru.nm17.narodmon.db.entities.SensorType
 import ru.nm17.narodmon.ui.elements.GenericNavScaffold
 import ru.nm17.narodmon.ui.elements.TileMap
+import ru.nm17.narodmon.ui.iosevkaFamily
 
 data class Sensor(
     // TODO: Вынести в отдельный класс, и явно не в директорию `ui`
@@ -322,7 +323,8 @@ fun SensorItem(sensor: Sensor) {
                 ) {
                     Text(
                         text = "${sensor.value} ${sensor.unit}",
-                        fontFamily = FontFamily.Monospace,
+                        fontFamily = iosevkaFamily,
+                        fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
                         modifier = Modifier.padding(horizontal = 3.dp, vertical = 1.dp)
                     )
