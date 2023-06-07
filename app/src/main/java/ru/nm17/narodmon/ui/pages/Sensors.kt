@@ -57,7 +57,7 @@ fun SensorsPage(navController: NavController) {
     var searchQuery by remember { mutableStateOf("") }
     var searchActive by remember { mutableStateOf(false) }
 
-    var sortingShown by remember { mutableStateOf(false) }
+    var sortingShow by remember { mutableStateOf(false) }
     var sortingType by remember { mutableStateOf(SortingType.DISTANCE) }
 
     val sortingTypes = remember {
@@ -70,7 +70,7 @@ fun SensorsPage(navController: NavController) {
         )
     }
 
-    var filterShown by remember { mutableStateOf(false) }
+    var filterShow by remember { mutableStateOf(false) }
     var filterMine by remember { mutableStateOf(false) }
 
     val filterItems = remember {
@@ -130,12 +130,12 @@ fun SensorsPage(navController: NavController) {
                 modifier = Modifier.padding(horizontal = 8.dp),
             ) {
                 AssistChip(
-                    onClick = { filterShown = true },
+                    onClick = { filterShow = true },
                     label = { Text(text = stringResource(R.string.sensors_filter)) },
                 )
 
                 AssistChip(
-                    onClick = { sortingShown = true },
+                    onClick = { sortingShow = true },
                     label = { Text(text = stringResource(R.string.sensors_sorting)) },
                 )
 
@@ -148,8 +148,8 @@ fun SensorsPage(navController: NavController) {
         }
     }
 
-    if (filterShown) {
-        ModalBottomSheet(onDismissRequest = { filterShown = false }) {
+    if (filterShow) {
+        ModalBottomSheet(onDismissRequest = { filterShow = false }) {
             Row(
                 horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth(),
@@ -186,8 +186,8 @@ fun SensorsPage(navController: NavController) {
         }
     }
 
-    if (sortingShown) {
-        ModalBottomSheet(onDismissRequest = { sortingShown = false }) {
+    if (sortingShow) {
+        ModalBottomSheet(onDismissRequest = { sortingShow = false }) {
             LazyColumn(
                 modifier = Modifier.padding(horizontal = 4.dp),
             ) {
