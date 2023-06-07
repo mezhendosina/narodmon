@@ -14,13 +14,14 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,11 +41,34 @@ data class SensorFilter(
     var enabled: MutableState<Boolean> = mutableStateOf(false),
 )
 
+data class SensorSortingItem(
+    val stringRes: Int,
+    val sortingType: SortingType,
+)
+
+enum class SortingType {
+    DISTANCE, TYPE, UPD_TIME,
+    NAME, VALUE,
+}
+
 @ExperimentalMaterial3Api
 @Composable
 fun SensorsPage(navController: NavController) {
     var searchQuery by remember { mutableStateOf("") }
     var searchActive by remember { mutableStateOf(false) }
+
+    var sortingShown by remember { mutableStateOf(false) }
+    var sortingType by remember { mutableStateOf(SortingType.DISTANCE) }
+
+    val sortingTypes = remember {
+        listOf(
+            SensorSortingItem(R.string.sort_distance, SortingType.DISTANCE),
+            SensorSortingItem(R.string.sort_type, SortingType.TYPE),
+            SensorSortingItem(R.string.sort_update_time, SortingType.UPD_TIME),
+            SensorSortingItem(R.string.sort_name, SortingType.NAME),
+            SensorSortingItem(R.string.sort_value, SortingType.VALUE),
+        )
+    }
 
     var filterShown by remember { mutableStateOf(false) }
     var filterMine by remember { mutableStateOf(false) }
@@ -111,7 +135,7 @@ fun SensorsPage(navController: NavController) {
                 )
 
                 AssistChip(
-                    onClick = { },
+                    onClick = { sortingShown = true },
                     label = { Text(text = stringResource(R.string.sensors_sorting)) },
                 )
 
@@ -154,6 +178,31 @@ fun SensorsPage(navController: NavController) {
                             text = stringResource(id = it.stringRes),
                             modifier = Modifier.clickable {
                                 it.enabled.value = !it.enabled.value
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    if (sortingShown) {
+        ModalBottomSheet(onDismissRequest = { sortingShown = false }) {
+            LazyColumn(
+                modifier = Modifier.padding(horizontal = 4.dp),
+            ) {
+                items (sortingTypes) {
+                    Row (
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        RadioButton(
+                            selected = (sortingType == it.sortingType),
+                            onClick = { sortingType = it.sortingType },
+                        )
+                        Text(
+                            text = stringResource(id = it.stringRes),
+                            modifier = Modifier.clickable {
+                                sortingType = it.sortingType
                             }
                         )
                     }

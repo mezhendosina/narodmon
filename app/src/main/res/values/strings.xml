@@ -43,4 +43,9 @@
     <string name="filter_water_meter">Счётчик воды</string>
     <string name="filter_time">Время работы</string>
     <string name="sensors_filter_title">Тип датчиков</string>
+    <string name="sort_distance">Расстояние</string>
+    <string name="sort_type">Тип датчика</string>
+    <string name="sort_update_time">Время последнего обновления</string>
+    <string name="sort_name">Название</string>
+    <string name="sort_value">Данные</string>
 </resources>
