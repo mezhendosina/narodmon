@@ -48,4 +48,7 @@
     <string name="sort_update_time">Время последнего обновления</string>
     <string name="sort_name">Название</string>
     <string name="sort_value">Данные</string>
+    <string name="sort_option_desc">По убыванию</string>
+    <string name="sort_option_fav">Избранные сверху</string>
+    <string name="sort_option_mine">Мои датчики сверху</string>
 </resources>

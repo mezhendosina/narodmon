@@ -59,6 +59,9 @@ fun SensorsPage(navController: NavController) {
 
     var sortingShow by remember { mutableStateOf(false) }
     var sortingType by remember { mutableStateOf(SortingType.DISTANCE) }
+    var sortingDesc by remember { mutableStateOf(false) }
+    var sortingMine by remember { mutableStateOf(false) }
+    var sortingFav  by remember { mutableStateOf(false) }
 
     val sortingTypes = remember {
         listOf(
@@ -165,22 +168,11 @@ fun SensorsPage(navController: NavController) {
                 modifier = Modifier.padding(horizontal = 4.dp),
             ) {
                 items(filterItems) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Checkbox(
-                            checked = it.enabled.value,
-                            onCheckedChange = { checked ->
-                                it.enabled.value = checked
-                            },
-                        )
-                        Text(
-                            text = stringResource(id = it.stringRes),
-                            modifier = Modifier.clickable {
-                                it.enabled.value = !it.enabled.value
-                            }
-                        )
-                    }
+                    FilterCheckbox(
+                        checked = it.enabled.value,
+                        onCheckedChange = { it.enabled.value = !it.enabled.value },
+                        stringRes = it.stringRes,
+                    )
                 }
             }
         }
@@ -192,22 +184,71 @@ fun SensorsPage(navController: NavController) {
                 modifier = Modifier.padding(horizontal = 4.dp),
             ) {
                 items (sortingTypes) {
-                    Row (
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        RadioButton(
-                            selected = (sortingType == it.sortingType),
-                            onClick = { sortingType = it.sortingType },
-                        )
-                        Text(
-                            text = stringResource(id = it.stringRes),
-                            modifier = Modifier.clickable {
-                                sortingType = it.sortingType
-                            }
-                        )
-                    }
+                    FilterRadioButton(
+                        selected = (sortingType == it.sortingType),
+                        onClick = { sortingType = it.sortingType },
+                        stringRes = it.stringRes,
+                    )
+                }
+
+                item {
+                    FilterCheckbox(
+                        checked = sortingDesc,
+                        onCheckedChange = { sortingDesc = !sortingDesc },
+                        stringRes = R.string.sort_option_desc,
+                    )
+                }
+
+                item {
+                    FilterCheckbox(
+                        checked = sortingFav,
+                        onCheckedChange = { sortingFav = !sortingFav },
+                        stringRes = R.string.sort_option_fav,
+                    )
+                }
+
+                item {
+                    FilterCheckbox(
+                        checked = sortingMine,
+                        onCheckedChange = { sortingMine = !sortingMine },
+                        stringRes = R.string.sort_option_mine,
+                    )
                 }
             }
         }
+    }
+}
+
+@ExperimentalMaterial3Api
+@Composable
+fun FilterCheckbox(checked: Boolean, onCheckedChange: () -> Unit, stringRes: Int) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Checkbox(
+            checked = checked,
+            onCheckedChange = { onCheckedChange() },
+        )
+        Text(
+            text = stringResource(id = stringRes),
+            modifier = Modifier.clickable { onCheckedChange() },
+        )
+    }
+}
+
+@ExperimentalMaterial3Api
+@Composable
+fun FilterRadioButton(selected: Boolean, onClick: () -> Unit, stringRes: Int) {
+    Row (
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        RadioButton(
+            selected = selected,
+            onClick = onClick,
+        )
+        Text(
+            text = stringResource(id = stringRes),
+            modifier = Modifier.clickable { onClick() },
+        )
     }
 }
