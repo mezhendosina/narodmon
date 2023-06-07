@@ -165,7 +165,9 @@ fun SensorsPage(navController: NavController) {
             }
 
             LazyColumn(
-                modifier = Modifier.padding(horizontal = 4.dp),
+                modifier = Modifier
+                    .padding(horizontal = 4.dp)
+                    .fillMaxWidth(),
             ) {
                 items(filterItems) {
                     FilterCheckbox(
@@ -192,9 +194,11 @@ fun SensorsPage(navController: NavController) {
             }
             
             LazyColumn(
-                modifier = Modifier.padding(horizontal = 4.dp),
+                modifier = Modifier
+                    .padding(horizontal = 4.dp)
+                    .fillMaxWidth(),
             ) {
-                items (sortingTypes) {
+                items(sortingTypes) {
                     FilterRadioButton(
                         selected = (sortingType == it.sortingType),
                         onClick = { sortingType = it.sortingType },
