@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
@@ -21,7 +20,6 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SearchBar
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -32,10 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -244,9 +240,8 @@ fun SensorsPage(navController: NavController) {
                 items(filterItems) {
                     FilterCheckbox(
                         checked = it.enabled.value,
-                        onCheckedChange = { it.enabled.value = !it.enabled.value },
                         stringRes = it.stringRes,
-                    )
+                    ) { it.enabled.value = !it.enabled.value }
                 }
             }
         }
@@ -264,7 +259,7 @@ fun SensorsPage(navController: NavController) {
                     fontWeight = FontWeight(500),
                 )
             }
-            
+
             LazyColumn(
                 modifier = Modifier
                     .padding(horizontal = 4.dp)
@@ -281,25 +276,22 @@ fun SensorsPage(navController: NavController) {
                 item {
                     FilterCheckbox(
                         checked = sortingDesc,
-                        onCheckedChange = { sortingDesc = !sortingDesc },
                         stringRes = R.string.sort_option_desc,
-                    )
+                    ) { sortingDesc = !sortingDesc }
                 }
 
                 item {
                     FilterCheckbox(
                         checked = sortingFav,
-                        onCheckedChange = { sortingFav = !sortingFav },
                         stringRes = R.string.sort_option_fav,
-                    )
+                    ) { sortingFav = !sortingFav }
                 }
 
                 item {
                     FilterCheckbox(
                         checked = sortingMine,
-                        onCheckedChange = { sortingMine = !sortingMine },
                         stringRes = R.string.sort_option_mine,
-                    )
+                    ) { sortingMine = !sortingMine }
                 }
             }
         }
@@ -336,9 +328,10 @@ fun SensorItem(sensor: Sensor) {
 
 @ExperimentalMaterial3Api
 @Composable
-fun FilterCheckbox(checked: Boolean, onCheckedChange: () -> Unit, stringRes: Int) {
+fun FilterCheckbox(checked: Boolean, stringRes: Int, onCheckedChange: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth().clickable { onCheckedChange() }
     ) {
         Checkbox(
             checked = checked,
@@ -346,7 +339,6 @@ fun FilterCheckbox(checked: Boolean, onCheckedChange: () -> Unit, stringRes: Int
         )
         Text(
             text = stringResource(id = stringRes),
-            modifier = Modifier.clickable { onCheckedChange() },
         )
     }
 }
