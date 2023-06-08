@@ -133,22 +133,6 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Composable
 fun NavHolderEl() {
     //NavHost(navController = NavHostController(N), graph =)
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    NarodMonTheme {
-        Greeting("Android")
-    }
 }
