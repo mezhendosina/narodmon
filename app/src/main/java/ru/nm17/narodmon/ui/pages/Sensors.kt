@@ -220,81 +220,19 @@ fun SensorsPage(navController: NavController) {
     }
 
     if (filterShow) {
-        ModalBottomSheet(onDismissRequest = { filterShow = false }) {
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = stringResource(R.string.sensors_filter_title),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight(500),
-                )
-            }
-
-            LazyColumn(
-                modifier = Modifier
-                    .padding(horizontal = 4.dp)
-                    .fillMaxWidth(),
-            ) {
-                items(filterItems) {
-                    FilterCheckbox(
-                        checked = it.enabled.value,
-                        stringRes = it.stringRes,
-                    ) { it.enabled.value = !it.enabled.value }
-                }
-            }
-        }
+        FilterSensorsBottomSheet(
+            filterItems,
+            onDismissRequest = { filterShow = false }
+        )
     }
 
     if (sortingShow) {
-        ModalBottomSheet(onDismissRequest = { sortingShow = false }) {
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text = stringResource(R.string.sensors_sort_title),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight(500),
-                )
-            }
-
-            LazyColumn(
-                modifier = Modifier
-                    .padding(horizontal = 4.dp)
-                    .fillMaxWidth(),
-            ) {
-                items(sortingTypes) {
-                    FilterRadioButton(
-                        selected = (sortingType == it.sortingType),
-                        onClick = { sortingType = it.sortingType },
-                        stringRes = it.stringRes,
-                    )
-                }
-
-                item {
-                    FilterCheckbox(
-                        checked = sortingDesc,
-                        stringRes = R.string.sort_option_desc,
-                    ) { sortingDesc = !sortingDesc }
-                }
-
-                item {
-                    FilterCheckbox(
-                        checked = sortingFav,
-                        stringRes = R.string.sort_option_fav,
-                    ) { sortingFav = !sortingFav }
-                }
-
-                item {
-                    FilterCheckbox(
-                        checked = sortingMine,
-                        stringRes = R.string.sort_option_mine,
-                    ) { sortingMine = !sortingMine }
-                }
-            }
-        }
+        SortSensorsBottomSheet(
+            onApply = { s ->
+                sortingType = s
+                sortingShow = false
+            },
+            onDismissRequest = { sortingShow = false })
     }
 }
 
