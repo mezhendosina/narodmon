@@ -16,13 +16,12 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
@@ -31,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,43 +38,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ru.nm17.narodmon.R
 import ru.nm17.narodmon.db.entities.SensorType
+import ru.nm17.narodmon.ui.bottomSheets.FilterSensorsBottomSheet
+import ru.nm17.narodmon.ui.bottomSheets.SortSensorsBottomSheet
 import ru.nm17.narodmon.ui.elements.GenericNavScaffold
 import ru.nm17.narodmon.ui.elements.TileMap
+import ru.nm17.narodmon.ui.entities.SensorEntity
+import ru.nm17.narodmon.ui.entities.SensorFilterUiEntity
+import ru.nm17.narodmon.ui.entities.SortingTypes
 import ru.nm17.narodmon.ui.iosevkaFamily
 
-data class Sensor(
-    // TODO: Вынести в отдельный класс, и явно не в директорию `ui`
-    val id: Int,
-    val type: SensorType,
-    val deviceName: String,
-    val deviceOwner: Int,
-    val name: String,
-    val favorite: Boolean,
-    val public: Boolean,
-    val mine: Boolean,
-    val location: String,
-    val distance: Double,  // километры
-    val value: Double,
-    val unit: String,
-    val changed: Int,
-)
-
-data class SensorFilter(
-    // TODO: Можно попробовать объединить с db/SensorType.kt
-    val stringRes: Int,
-    val code: Int,
-    var enabled: MutableState<Boolean> = mutableStateOf(false),
-)
-
-data class SensorSortingItem(
-    val stringRes: Int,
-    val sortingType: SortingType,
-)
-
-enum class SortingType {
-    DISTANCE, TYPE, UPD_TIME,
-    NAME, VALUE,
-}
 
 @ExperimentalMaterial3Api
 @Composable
@@ -82,21 +54,9 @@ fun SensorsPage(navController: NavController) {
     var searchQuery by remember { mutableStateOf("") }
     var searchActive by remember { mutableStateOf(false) }
 
-    var sortingShow by remember { mutableStateOf(false) }
-    var sortingType by remember { mutableStateOf(SortingType.DISTANCE) }
-    var sortingDesc by remember { mutableStateOf(false) }
-    var sortingMine by remember { mutableStateOf(false) }
-    var sortingFav  by remember { mutableStateOf(false) }
 
-    val sortingTypes = remember {
-        listOf(
-            SensorSortingItem(R.string.sort_distance, SortingType.DISTANCE),
-            SensorSortingItem(R.string.sort_type, SortingType.TYPE),
-            SensorSortingItem(R.string.sort_update_time, SortingType.UPD_TIME),
-            SensorSortingItem(R.string.sort_name, SortingType.NAME),
-            SensorSortingItem(R.string.sort_value, SortingType.VALUE),
-        )
-    }
+    var sortingShow by remember { mutableStateOf(false) }
+    var sortingType by remember { mutableStateOf(SortingTypes.DISTANCE) }
 
     var filterShow by remember { mutableStateOf(false) }
     var filterMine by remember { mutableStateOf(false) }
@@ -107,36 +67,36 @@ fun SensorsPage(navController: NavController) {
              *  Заменить `code` на настоящее значение
              *  либо динамически его подгружать из ответа АПИ
              *  (см. /appInit, ключ в жсоне: types.type) */
-            SensorFilter(R.string.filter_temp, 0),
-            SensorFilter(R.string.filter_temp_water, 1),
-            SensorFilter(R.string.filter_temp_ground, 2),
-            SensorFilter(R.string.filter_temp_dew_point, 3),
-            SensorFilter(R.string.filter_humidity, 4),
-            SensorFilter(R.string.filter_pressure, 5),
-            SensorFilter(R.string.filter_lightness, 6),
-            SensorFilter(R.string.filter_uv, 7),
-            SensorFilter(R.string.filter_radiation, 8),
-            SensorFilter(R.string.filter_rainfall, 9),
-            SensorFilter(R.string.filter_dust, 10),
-            SensorFilter(R.string.filter_wind_speed, 11),
-            SensorFilter(R.string.filter_wind_direction, 12),
-            SensorFilter(R.string.filter_concentration, 13),
-            SensorFilter(R.string.filter_power, 14),
-            SensorFilter(R.string.filter_voltage, 15),
-            SensorFilter(R.string.filter_amperage, 16),
-            SensorFilter(R.string.filter_energy, 17),
-            SensorFilter(R.string.filter_battery, 18),
-            SensorFilter(R.string.filter_rxtx, 19),
-            SensorFilter(R.string.filter_signal, 20),
-            SensorFilter(R.string.filter_water_meter, 21),
-            SensorFilter(R.string.filter_time, 22),
+            SensorFilterUiEntity(R.string.filter_temp, 0),
+            SensorFilterUiEntity(R.string.filter_temp_water, 1),
+            SensorFilterUiEntity(R.string.filter_temp_ground, 2),
+            SensorFilterUiEntity(R.string.filter_temp_dew_point, 3),
+            SensorFilterUiEntity(R.string.filter_humidity, 4),
+            SensorFilterUiEntity(R.string.filter_pressure, 5),
+            SensorFilterUiEntity(R.string.filter_lightness, 6),
+            SensorFilterUiEntity(R.string.filter_uv, 7),
+            SensorFilterUiEntity(R.string.filter_radiation, 8),
+            SensorFilterUiEntity(R.string.filter_rainfall, 9),
+            SensorFilterUiEntity(R.string.filter_dust, 10),
+            SensorFilterUiEntity(R.string.filter_wind_speed, 11),
+            SensorFilterUiEntity(R.string.filter_wind_direction, 12),
+            SensorFilterUiEntity(R.string.filter_concentration, 13),
+            SensorFilterUiEntity(R.string.filter_power, 14),
+            SensorFilterUiEntity(R.string.filter_voltage, 15),
+            SensorFilterUiEntity(R.string.filter_amperage, 16),
+            SensorFilterUiEntity(R.string.filter_energy, 17),
+            SensorFilterUiEntity(R.string.filter_battery, 18),
+            SensorFilterUiEntity(R.string.filter_rxtx, 19),
+            SensorFilterUiEntity(R.string.filter_signal, 20),
+            SensorFilterUiEntity(R.string.filter_water_meter, 21),
+            SensorFilterUiEntity(R.string.filter_time, 22),
         )
     }
 
-    val sensors = remember {
+    val sensorEntities = remember {
         mutableListOf(
             // TODO: загружать датчики с сервера. Этот список -- для макета
-            Sensor(
+            SensorEntity(
                 0,
                 SensorType(0, "temp", "C"),
                 "device0", 0,
@@ -145,7 +105,7 @@ fun SensorsPage(navController: NavController) {
                 "Москва", 0.4,
                 20.0, "C", 1686142800,
             ),
-            Sensor(
+            SensorEntity(
                 1,
                 SensorType(4, "humidity", "%"),
                 "device1", 0,
@@ -154,7 +114,7 @@ fun SensorsPage(navController: NavController) {
                 "Подмосковье", 1.1,
                 39.0, "%", 1686142800,
             ),
-            Sensor(
+            SensorEntity(
                 2,
                 SensorType(11, "wind speed", "m/s"),
                 "device2", 1,
@@ -183,7 +143,9 @@ fun SensorsPage(navController: NavController) {
                 onQueryChange = { query -> searchQuery = query },
                 onSearch = { searchActive = false },
                 placeholder = { Text(stringResource(R.string.search)) },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = if(!searchActive) 8.dp else 0.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = if (!searchActive) 8.dp else 0.dp)
             ) {}
 
             Row(
@@ -212,7 +174,7 @@ fun SensorsPage(navController: NavController) {
             LazyColumn(
                 modifier = Modifier.fillMaxHeight(),
             ) {
-                items(sensors) { sensor ->
+                items(sensorEntities) { sensor ->
                     SensorItem(sensor)
                 }
             }
@@ -238,21 +200,21 @@ fun SensorsPage(navController: NavController) {
 
 @ExperimentalMaterial3Api
 @Composable
-fun SensorItem(sensor: Sensor) {
+fun SensorItem(sensorEntity: SensorEntity) {
     ListItem(
-        overlineContent = { Text(text = "${sensor.deviceName} от ${sensor.deviceOwner}") },
-        headlineContent = { Text(text = sensor.type.name) },
-        supportingContent = { Text(text = sensor.name) },
+        overlineContent = { Text(text = "${sensorEntity.deviceName} от ${sensorEntity.deviceOwner}") },
+        headlineContent = { Text(text = sensorEntity.type.name) },
+        supportingContent = { Text(text = sensorEntity.name) },
         trailingContent = {
             Column(
                 horizontalAlignment = Alignment.End,
             ) {
-                Text(text = "${sensor.distance} km")
+                Text(text = "${sensorEntity.distance} km")
                 ElevatedCard(
                     shape = RectangleShape,
                 ) {
                     Text(
-                        text = "${sensor.value} ${sensor.unit}",
+                        text = "${sensorEntity.value} ${sensorEntity.unit}",
                         fontFamily = iosevkaFamily,
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
@@ -269,7 +231,9 @@ fun SensorItem(sensor: Sensor) {
 fun FilterCheckbox(checked: Boolean, stringRes: Int, onCheckedChange: () -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().clickable { onCheckedChange() }
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onCheckedChange() }
     ) {
         Checkbox(
             checked = checked,
@@ -284,7 +248,7 @@ fun FilterCheckbox(checked: Boolean, stringRes: Int, onCheckedChange: () -> Unit
 @ExperimentalMaterial3Api
 @Composable
 fun FilterRadioButton(selected: Boolean, onClick: () -> Unit, stringRes: Int) {
-    Row (
+    Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         RadioButton(
