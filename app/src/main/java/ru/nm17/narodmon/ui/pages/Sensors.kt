@@ -183,7 +183,7 @@ fun SensorsPage(navController: NavController) {
                 onQueryChange = { query -> searchQuery = query },
                 onSearch = { searchActive = false },
                 placeholder = { Text(stringResource(R.string.search)) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(horizontal = if(!searchActive) 8.dp else 0.dp)
             ) {}
 
             Row(
