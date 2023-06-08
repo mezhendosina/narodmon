@@ -16,13 +16,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.nm17.narodmon.R
+import ru.nm17.narodmon.ui.entities.SensorFilterUiEntity
 import ru.nm17.narodmon.ui.pages.FilterCheckbox
-import ru.nm17.narodmon.ui.pages.SensorFilter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterSensorsBottomSheet(
-    filterItems: List<SensorFilter>,
+    filterItems: List<SensorFilterUiEntity>,
     onDismissRequest: () -> Unit
 ) {
     ModalBottomSheet(onDismissRequest = { onDismissRequest.invoke() }) {
