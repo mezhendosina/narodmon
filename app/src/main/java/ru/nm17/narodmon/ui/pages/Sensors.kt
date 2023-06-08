@@ -154,11 +154,23 @@ fun SensorsPage(navController: NavController) {
             ) {
                 AssistChip(
                     onClick = { filterShow = true },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_filter),
+                            contentDescription = stringResource(id = R.string.sensors_filter)
+                        )
+                    },
                     label = { Text(text = stringResource(R.string.sensors_filter)) },
                 )
 
                 AssistChip(
                     onClick = { sortingShow = true },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_sort),
+                            contentDescription = stringResource(id = R.string.sensors_sorting)
+                        )
+                    },
                     label = { Text(text = stringResource(R.string.sensors_sorting)) },
                 )
 
