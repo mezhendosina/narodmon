@@ -262,14 +262,12 @@ fun FilterCheckbox(checked: Boolean, stringRes: Int, onCheckedChange: () -> Unit
 fun FilterRadioButton(selected: Boolean, onClick: () -> Unit, stringRes: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth().clickable { onClick.invoke() }
     ) {
         RadioButton(
             selected = selected,
             onClick = onClick,
         )
-        Text(
-            text = stringResource(id = stringRes),
-            modifier = Modifier.clickable { onClick() },
-        )
+        Text(text = stringResource(id = stringRes))
     }
 }
