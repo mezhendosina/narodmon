@@ -61,37 +61,6 @@ fun SensorsPage(navController: NavController) {
     var filterShow by remember { mutableStateOf(false) }
     var filterMine by remember { mutableStateOf(false) }
 
-    val filterItems = remember {
-        listOf(
-            /* TODO:
-             *  Заменить `code` на настоящее значение
-             *  либо динамически его подгружать из ответа АПИ
-             *  (см. /appInit, ключ в жсоне: types.type) */
-            SensorFilterUiEntity(R.string.filter_temp, 0),
-            SensorFilterUiEntity(R.string.filter_temp_water, 1),
-            SensorFilterUiEntity(R.string.filter_temp_ground, 2),
-            SensorFilterUiEntity(R.string.filter_temp_dew_point, 3),
-            SensorFilterUiEntity(R.string.filter_humidity, 4),
-            SensorFilterUiEntity(R.string.filter_pressure, 5),
-            SensorFilterUiEntity(R.string.filter_lightness, 6),
-            SensorFilterUiEntity(R.string.filter_uv, 7),
-            SensorFilterUiEntity(R.string.filter_radiation, 8),
-            SensorFilterUiEntity(R.string.filter_rainfall, 9),
-            SensorFilterUiEntity(R.string.filter_dust, 10),
-            SensorFilterUiEntity(R.string.filter_wind_speed, 11),
-            SensorFilterUiEntity(R.string.filter_wind_direction, 12),
-            SensorFilterUiEntity(R.string.filter_concentration, 13),
-            SensorFilterUiEntity(R.string.filter_power, 14),
-            SensorFilterUiEntity(R.string.filter_voltage, 15),
-            SensorFilterUiEntity(R.string.filter_amperage, 16),
-            SensorFilterUiEntity(R.string.filter_energy, 17),
-            SensorFilterUiEntity(R.string.filter_battery, 18),
-            SensorFilterUiEntity(R.string.filter_rxtx, 19),
-            SensorFilterUiEntity(R.string.filter_signal, 20),
-            SensorFilterUiEntity(R.string.filter_water_meter, 21),
-            SensorFilterUiEntity(R.string.filter_time, 22),
-        )
-    }
 
     val sensorEntities = remember {
         mutableListOf(
@@ -195,7 +164,10 @@ fun SensorsPage(navController: NavController) {
 
     if (filterShow) {
         FilterSensorsBottomSheet(
-            filterItems,
+            onApply = {
+                // TODO применение фильтров
+                filterShow = false
+            },
             onDismissRequest = { filterShow = false }
         )
     }
@@ -262,7 +234,9 @@ fun FilterCheckbox(checked: Boolean, stringRes: Int, onCheckedChange: () -> Unit
 fun FilterRadioButton(selected: Boolean, onClick: () -> Unit, stringRes: Int) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth().clickable { onClick.invoke() }
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick.invoke() }
     ) {
         RadioButton(
             selected = selected,
