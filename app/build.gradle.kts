@@ -145,4 +145,8 @@ dependencies {
 
     // Map Compose library
     implementation("ovh.plrapps:mapcompose:2.7.1")
-}
+
+    // Glide
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
+    }
