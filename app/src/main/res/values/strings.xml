@@ -15,7 +15,7 @@
     <string name="sensors_page_title">Сенсоры</string>
     <string name="waiting_for_user_agreement">Ожидаю соглашение пользователя</string>
     <string name="search">Поиск</string>
-    <string name="sensors_filter">Фильтр</string>
+    <string name="sensors_filter">Тип датчиков</string>
     <string name="sensors_sorting">Сортировка</string>
     <string name="sensors_mine">Мои датчики</string>
     <string name="filter_temp_dew_point">Температура точки росы</string>
@@ -51,4 +51,5 @@
     <string name="sort_update_time">По времени обновления</string>
     <string name="apply">Применить</string>
     <string name="sort_by_distance_desc">От дальних к ближним</string>
+    <string name="cancel1">Отменить</string>
 </resources>

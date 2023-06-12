@@ -13,6 +13,7 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsChannel
 import io.ktor.utils.io.jvm.javaio.toInputStream
 import ovh.plrapps.mapcompose.api.addLayer
+import ovh.plrapps.mapcompose.api.onTouchDown
 import ovh.plrapps.mapcompose.api.scale
 import ovh.plrapps.mapcompose.api.setScroll
 import ovh.plrapps.mapcompose.core.TileStreamProvider
@@ -33,7 +34,7 @@ suspend fun requestTile(row: Int, col: Int, zoom: Int): InputStream {
 }
 
 @Composable
-fun TileMap(modifier: Modifier = Modifier) {
+fun TileMap(modifier: Modifier = Modifier, onTap: () -> Unit) {
     val state by remember {
         mutableStateOf(
             MapState(
@@ -43,6 +44,9 @@ fun TileMap(modifier: Modifier = Modifier) {
                 workerCount = 16,
             ).apply {
                 addLayer(tileStreamProvider)
+                onTouchDown {
+                    onTap.invoke()
+                }
             }
         )
     }
