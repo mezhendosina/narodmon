@@ -1,6 +1,7 @@
 package ru.nm17.narodmon.appNarodMonApiClient.entities.sensorsNearby
 
-import ru.nm17.narodmon.ui.entities.SensorEntity
+import ru.nm17.narodmon.appNarodMonApiClient.entities.SensorEntity
+
 
 data class NearbyDeviceEntity(
     val cmd: Int,
