@@ -1,7 +1,7 @@
 package ru.nm17.narodmon.appNarodMonApiClient.entities
 
 
-data class Sensor(
+data class SensorEntity(
     val changed: Int,
     val fav: Int,
     val id: Int,
