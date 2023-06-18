@@ -106,12 +106,6 @@ dependencies {
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
 
-    // optional - RxJava2 support for Room
-    implementation("androidx.room:room-rxjava2:$room_version")
-
-    // optional - RxJava3 support for Room
-    implementation("androidx.room:room-rxjava3:$room_version")
-
     // optional - Guava support for Room, including Optional and ListenableFuture
     implementation("androidx.room:room-guava:$room_version")
 
@@ -151,4 +145,8 @@ dependencies {
 
     // Map Compose library
     implementation("ovh.plrapps:mapcompose:2.7.1")
-}
+
+    // Glide
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
+    }
