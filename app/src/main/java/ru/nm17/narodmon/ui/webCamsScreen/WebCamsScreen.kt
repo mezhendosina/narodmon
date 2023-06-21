@@ -11,10 +11,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ru.nm17.narodmon.ui.theme.NarodMonTheme
 
 @Composable
-fun WebCamsScreen() {
+fun WebCamsScreen(navController: NavController) {
 
     var webCams by remember {
         mutableStateOf(
@@ -58,6 +60,6 @@ fun WebCamsScreen() {
 @Composable
 fun PreviewWebCams() {
     NarodMonTheme {
-        WebCamsScreen()
+        WebCamsScreen(rememberNavController())
     }
 }
