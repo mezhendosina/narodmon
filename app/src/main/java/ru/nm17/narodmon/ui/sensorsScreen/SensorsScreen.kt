@@ -14,13 +14,16 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SearchBar
@@ -59,13 +62,14 @@ import ru.nm17.narodmon.ui.elements.TileMap
 import ru.nm17.narodmon.ui.entities.SensorEntity
 import ru.nm17.narodmon.ui.entities.SensorSortingUiEntity
 import ru.nm17.narodmon.ui.entities.SortingTypes
+import ru.nm17.narodmon.ui.navHost.MainScreenSealed
 import ru.nm17.narodmon.ui.theme.NarodMonTheme
 import ru.nm17.narodmon.ui.toChipTitle
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
-fun SensorsScreen(navController: NavController) {
+fun SensorsScreen(navController: NavController, onSettingsClick: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
 
     var searchQuery by remember { mutableStateOf("") }
@@ -119,108 +123,100 @@ fun SensorsScreen(navController: NavController) {
         mutableStateOf(SheetHeight.ExtraExpanded)
     }
 
-    BottomSheetScaffold(
-        modifier = Modifier.fillMaxSize(),
-        sheetPeekHeight = when (sheetHeight) {
-            SheetHeight.ExtraExpanded -> 256.dp
-            SheetHeight.Expanded -> 128.dp
-            SheetHeight.Hidden -> 0.dp
-        },
-        scaffoldState = scaffoldState,
-        sheetContent = {
-            AnimatedVisibility(visible = scaffoldState.bottomSheetState.currentValue == SheetValue.Expanded) {
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    placeholder = { Text(stringResource(R.string.search)) },
-                    shape = SearchBarDefaults.inputFieldShape,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp, vertical = 8.dp)
-                )
-            }
-
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
+    BottomSheetScaffold(modifier = Modifier.fillMaxSize(), sheetPeekHeight = when (sheetHeight) {
+        SheetHeight.ExtraExpanded -> 256.dp
+        SheetHeight.Expanded -> 128.dp
+        SheetHeight.Hidden -> 0.dp
+    }, scaffoldState = scaffoldState, sheetContent = {
+        AnimatedVisibility(visible = scaffoldState.bottomSheetState.currentValue == SheetValue.Expanded) {
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                placeholder = { Text(stringResource(R.string.search)) },
+                shape = SearchBarDefaults.inputFieldShape,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-            ) {
-                item {
-                    FilterChip(
-                        selected = false,
-                        onClick = { filterShow = true },
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_filter),
-                                contentDescription = stringResource(id = R.string.sensors_filter)
-                            )
-                        },
-                        trailingIcon = {
-//                            Icon(
-//                                Icons.Filled.ArrowDropDown,
-//                                "",
-//                                tint = MaterialTheme.colorScheme.onBackground
-//                            )
-                        },
+                    .padding(horizontal = 8.dp, vertical = 8.dp)
+            )
+        }
 
-                        label = { Text(text = stringResource(R.string.sensors_filter)) },
-                    )
-                }
-                item {
-                    FilterChip(
-                        selected = sortingType.sortingType != SortingTypes.DISTANCE,
-                        onClick = { sortingShow = true },
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_sort),
-                                contentDescription = stringResource(id = R.string.sensors_sorting)
-                            )
-                        },
-                        trailingIcon = {
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+        ) {
+            item {
+                FilterChip(
+                    selected = false,
+                    onClick = { filterShow = true },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_filter),
+                            contentDescription = stringResource(id = R.string.sensors_filter)
+                        )
+                    },
+                    trailingIcon = {
 //                            Icon(
 //                                Icons.Filled.ArrowDropDown,
 //                                "",
 //                                tint = MaterialTheme.colorScheme.onBackground
 //                            )
-                        },
-                        label = {
-                            Text(
-                                text = stringResource(
-                                    if (sortingType.sortingType == SortingTypes.DISTANCE) R.string.sensors_sorting
-                                    else sortingType.stringRes
-                                ).toChipTitle(),
+                    },
+
+                    label = { Text(text = stringResource(R.string.sensors_filter)) },
+                )
+            }
+            item {
+                FilterChip(selected = sortingType.sortingType != SortingTypes.DISTANCE,
+                    onClick = { sortingShow = true },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_sort),
+                            contentDescription = stringResource(id = R.string.sensors_sorting)
+                        )
+                    },
+                    trailingIcon = {
+//                            Icon(
+//                                Icons.Filled.ArrowDropDown,
+//                                "",
+//                                tint = MaterialTheme.colorScheme.onBackground
+//                            )
+                    },
+                    label = {
+                        Text(
+                            text = stringResource(
+                                if (sortingType.sortingType == SortingTypes.DISTANCE) R.string.sensors_sorting
+                                else sortingType.stringRes
+                            ).toChipTitle(),
+                        )
+                    })
+            }
+
+            item {
+                FilterChip(
+                    selected = filterMine,
+                    onClick = { filterMine = !filterMine },
+                    leadingIcon = {
+                        if (filterMine) {
+                            Icon(
+                                Icons.Rounded.Check, contentDescription = ""
                             )
                         }
-                    )
-                }
-
-                item {
-                    FilterChip(
-                        selected = filterMine,
-                        onClick = { filterMine = !filterMine },
-                        leadingIcon = {
-                            if (filterMine) {
-                                Icon(
-                                    Icons.Rounded.Check,
-                                    contentDescription = ""
-                                )
-                            }
-                        },
-                        label = { Text(text = stringResource(R.string.sensors_mine)) },
-                    )
-                }
-            }
-
-            LazyColumn(
-                modifier = Modifier.fillMaxHeight(),
-            ) {
-                items(sensorEntities) { sensor ->
-                    SensorItem(sensor)
-                }
+                    },
+                    label = { Text(text = stringResource(R.string.sensors_mine)) },
+                )
             }
         }
-    ) {
+
+        LazyColumn(
+            modifier = Modifier.fillMaxHeight(),
+        ) {
+            items(sensorEntities) { sensor ->
+                SensorItem(sensor)
+            }
+        }
+    }) {
         Box(modifier = Modifier.fillMaxSize()) {
             SearchBar(
                 query = searchQuery,
@@ -231,18 +227,24 @@ fun SensorsScreen(navController: NavController) {
                 },
                 onQueryChange = { query -> searchQuery = query },
                 onSearch = { searchActive = false },
-                placeholder = { Text(stringResource(R.string.search)) },
+                placeholder = { Text(stringResource(R.string.search_sensors)) },
+                trailingIcon = {
+                    IconButton(onClick = { onSettingsClick.invoke() }) {
+                        Icon(
+                            Icons.Outlined.Settings,
+                            contentDescription = stringResource(R.string.settings)
+                        )
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
                         horizontal = if (!searchActive) 8.dp else 0.dp,
-                        vertical = if (!searchActive) 16.dp else 0.dp
                     )
             ) {}
 
             TileMap(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             ) {
                 sheetHeight =
                     SheetHeight.Expanded // TODO придумать, чтобы менялось на SheetHeight.ExtraExpanded после взаимодействия с картой
@@ -251,25 +253,18 @@ fun SensorsScreen(navController: NavController) {
         }
     }
     if (sortingShow) {
-        SortSensorsDialog(
-            sortingType,
-            onApply = {
-                sortingType = it
-                sortingShow = false
-            },
-            onDismissRequest = {
-                sortingShow = false
-            }
-        )
+        SortSensorsDialog(sortingType, onApply = {
+            sortingType = it
+            sortingShow = false
+        }, onDismissRequest = {
+            sortingShow = false
+        })
     }
     if (filterShow) {
-        FilterSensorsDialog(
-            onApply = {
-                // TODO применение фильтров
-                filterShow = false
-            },
-            onDismissRequest = { filterShow = false }
-        )
+        FilterSensorsDialog(onApply = {
+            // TODO применение фильтров
+            filterShow = false
+        }, onDismissRequest = { filterShow = false })
     }
 }
 
@@ -277,6 +272,6 @@ fun SensorsScreen(navController: NavController) {
 @Composable
 fun PreviewNewSensors() {
     NarodMonTheme {
-        SensorsScreen(rememberNavController())
+        SensorsScreen(rememberNavController()) {}
     }
 }
