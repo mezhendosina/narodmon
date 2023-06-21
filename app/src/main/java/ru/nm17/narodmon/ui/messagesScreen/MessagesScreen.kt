@@ -1,4 +1,4 @@
-package ru.nm17.narodmon.ui.messages
+package ru.nm17.narodmon.ui.messagesScreen
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
