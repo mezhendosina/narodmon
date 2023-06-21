@@ -1,27 +1,16 @@
-@file:OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3Api::class
-)
+
 
 package ru.nm17.narodmon
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,23 +22,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.nm17.narodmon.db.AppDatabase
 import ru.nm17.narodmon.db.entities.KVSetting
 import ru.nm17.narodmon.ui.dialogs.AgreementDialog
 import ru.nm17.narodmon.ui.navHost.AppNavHost
-import ru.nm17.narodmon.ui.navHost.MainScreen
-import ru.nm17.narodmon.ui.sensorsScreen.SensorsScreen
 import ru.nm17.narodmon.ui.theme.NarodMonTheme
 
 
@@ -116,9 +96,6 @@ class MainActivity : ComponentActivity() {
                 } else {
                     AppNavHost()
                 }
-
-                // A surface container using the 'background' color from the theme
-
             }
         }
     }

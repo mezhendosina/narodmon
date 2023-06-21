@@ -1,12 +1,7 @@
 package ru.nm17.narodmon.ui.navHost
 
-import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.ui.graphics.vector.ImageVector
 import ru.nm17.narodmon.R
 
 sealed class MainScreenSealed(

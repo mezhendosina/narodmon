@@ -1,6 +1,5 @@
 package ru.nm17.narodmon.ui.sensorsScreen
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -13,26 +12,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,21 +39,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import ovh.plrapps.mapcompose.core.debounce
 import ru.nm17.narodmon.R
 import ru.nm17.narodmon.db.entities.SensorType
 import ru.nm17.narodmon.ui.dialogs.FilterSensorsDialog
-import ru.nm17.narodmon.ui.elements.SensorItem
 import ru.nm17.narodmon.ui.dialogs.SortSensorsDialog
+import ru.nm17.narodmon.ui.elements.SensorItem
 import ru.nm17.narodmon.ui.elements.TileMap
 import ru.nm17.narodmon.ui.entities.SensorEntity
 import ru.nm17.narodmon.ui.entities.SensorSortingUiEntity
 import ru.nm17.narodmon.ui.entities.SortingTypes
-import ru.nm17.narodmon.ui.navHost.MainScreenSealed
 import ru.nm17.narodmon.ui.theme.NarodMonTheme
 import ru.nm17.narodmon.ui.toChipTitle
 
@@ -70,7 +55,6 @@ import ru.nm17.narodmon.ui.toChipTitle
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun SensorsScreen(navController: NavController, onSettingsClick: () -> Unit) {
-    val coroutineScope = rememberCoroutineScope()
 
     var searchQuery by remember { mutableStateOf("") }
     var searchActive by remember { mutableStateOf(false) }
