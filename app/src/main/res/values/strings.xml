@@ -56,4 +56,6 @@
     <string name="messages">Сообщения</string>
     <string name="settings">Настройки</string>
     <string name="search_sensors">Поиск датчиков</string>
+    <string name="about_app">О приложении</string>
+    <string name="debug_menu">Debug-меню</string>
 </resources>
