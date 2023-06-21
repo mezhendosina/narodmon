@@ -47,49 +47,11 @@ import kotlinx.coroutines.launch
 import ru.nm17.narodmon.db.AppDatabase
 import ru.nm17.narodmon.db.entities.KVSetting
 import ru.nm17.narodmon.ui.dialogs.AgreementDialog
+import ru.nm17.narodmon.ui.navHost.AppNavHost
+import ru.nm17.narodmon.ui.navHost.MainScreen
 import ru.nm17.narodmon.ui.sensorsScreen.SensorsScreen
 import ru.nm17.narodmon.ui.theme.NarodMonTheme
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AppNavHost() {
-    val navController = rememberNavController()
-    val coScope = rememberCoroutineScope()
-    NavHost(navController = navController, startDestination = "sensors") {
-        composable("agreement") {
-
-        }
-
-        composable("sensors") {
-            Scaffold(bottomBar = {
-                BottomAppBar(actions = {
-                    Image(
-                        Icons.Rounded.Menu,
-                        contentDescription = null
-                    )
-                }, floatingActionButton = {
-                    FloatingActionButton(onClick = { /*TODO*/ }) {
-                        Image(
-                            Icons.Rounded.Add,
-                            contentDescription = ""
-                        )
-                    }
-                },
-                    contentPadding = PaddingValues(start = 16.dp)
-                )
-            }) {
-                Column(modifier = Modifier.padding(it)) {
-                    SensorsScreen(navController)
-                }
-            }
-
-        }
-    }
-
-    /*...*/
-
-}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,7 +115,6 @@ class MainActivity : ComponentActivity() {
                     }
                 } else {
                     AppNavHost()
-
                 }
 
                 // A surface container using the 'background' color from the theme
