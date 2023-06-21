@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ru.nm17.narodmon.ui.settings.SettingsScreen
+import ru.nm17.narodmon.ui.settings.SettingsNavigation
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -18,7 +18,7 @@ fun AppNavHost() {
             MainScreen(navController)
         }
         composable("settings") {
-            SettingsScreen()
+            SettingsNavigation()
         }
     }
 }
