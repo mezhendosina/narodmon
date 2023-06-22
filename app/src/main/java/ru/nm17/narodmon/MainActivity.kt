@@ -1,27 +1,16 @@
-@file:OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
-    ExperimentalMaterial3Api::class
-)
+
 
 package ru.nm17.narodmon
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,63 +22,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKeys
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.nm17.narodmon.db.AppDatabase
 import ru.nm17.narodmon.db.entities.KVSetting
 import ru.nm17.narodmon.ui.dialogs.AgreementDialog
-import ru.nm17.narodmon.ui.sensorsScreen.SensorsScreen
+import ru.nm17.narodmon.ui.navHost.AppNavHost
 import ru.nm17.narodmon.ui.theme.NarodMonTheme
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AppNavHost() {
-    val navController = rememberNavController()
-    val coScope = rememberCoroutineScope()
-    NavHost(navController = navController, startDestination = "sensors") {
-        composable("agreement") {
-
-        }
-
-        composable("sensors") {
-            Scaffold(bottomBar = {
-                BottomAppBar(actions = {
-                    Image(
-                        Icons.Rounded.Menu,
-                        contentDescription = null
-                    )
-                }, floatingActionButton = {
-                    FloatingActionButton(onClick = { /*TODO*/ }) {
-                        Image(
-                            Icons.Rounded.Add,
-                            contentDescription = ""
-                        )
-                    }
-                },
-                    contentPadding = PaddingValues(start = 16.dp)
-                )
-            }) {
-                Column(modifier = Modifier.padding(it)) {
-                    SensorsScreen(navController)
-                }
-            }
-
-        }
-    }
-
-    /*...*/
-
-}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,11 +95,7 @@ class MainActivity : ComponentActivity() {
                     }
                 } else {
                     AppNavHost()
-
                 }
-
-                // A surface container using the 'background' color from the theme
-
             }
         }
     }
