@@ -74,62 +74,43 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
+    
+    //-- Navigation
     val nav_version = "2.5.3"
 
-    // Java language implementation
-    implementation("androidx.navigation:navigation-fragment:$nav_version")
-    implementation("androidx.navigation:navigation-ui:$nav_version")
-
-    // Kotlin
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
-
-    // Feature module Support
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
-
-    // Testing Navigation
     androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
-
-    // Jetpack Compose Integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
-    val room_version = "2.5.1"
 
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
-
+    //-- Room
     // To use Kotlin annotation processing tool (kapt)
     //kapt("androidx.room:room-compiler:$room_version")
     // To use Kotlin Symbol Processing (KSP)
+    val room_version = "2.5.1"
+
     ksp("androidx.room:room-compiler:$room_version")
-
-    // optional - Kotlin Extensions and Coroutines support for Room
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
-
-    // optional - Guava support for Room, including Optional and ListenableFuture
     implementation("androidx.room:room-guava:$room_version")
-
-    // optional - Test helpers
     testImplementation("androidx.room:room-testing:$room_version")
-
-    // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:$room_version")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
-
-    // Ktor
+    //-- Ktor
     val ktor_version = "2.3.1"
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
-
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation(platform("dev.forkhandles:forkhandles-bom:2.6.0.0"))
     implementation("dev.forkhandles:result4k")
-
     implementation("io.ktor:ktor-client-core:2.3.1")
     implementation("io.ktor:ktor-client-okhttp:2.3.1")
-
     implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
+
 
     // For Identity Credential APIs
     implementation("androidx.security:security-identity-credential:1.0.0-alpha03")
@@ -143,10 +124,14 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
-    // Map Compose library
+
+    //-- Map Compose library
     implementation("ovh.plrapps:mapcompose:2.7.1")
 
-    // Glide
-    implementation ("com.github.bumptech.glide:glide:4.14.2")
+
+    //-- Glide
+    implementation("com.github.bumptech.glide:glide:4.14.2")
     implementation("com.github.bumptech.glide:compose:1.0.0-alpha.1")
-    }
+
+
+}

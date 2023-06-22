@@ -52,4 +52,10 @@
     <string name="apply">Применить</string>
     <string name="sort_by_distance_desc">От дальних к ближним</string>
     <string name="cancel1">Отменить</string>
+    <string name="webcams">Веб-камеры</string>
+    <string name="messages">Сообщения</string>
+    <string name="settings">Настройки</string>
+    <string name="search_sensors">Поиск датчиков</string>
+    <string name="about_app">О приложении</string>
+    <string name="debug_menu">Debug-меню</string>
 </resources>
