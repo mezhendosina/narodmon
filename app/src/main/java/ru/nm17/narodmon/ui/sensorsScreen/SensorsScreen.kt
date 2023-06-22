@@ -1,7 +1,6 @@
 package ru.nm17.narodmon.ui.sensorsScreen
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -29,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,13 +46,14 @@ import ru.nm17.narodmon.ui.elements.TileMap
 import ru.nm17.narodmon.ui.entities.SensorEntity
 import ru.nm17.narodmon.ui.entities.SensorSortingUiEntity
 import ru.nm17.narodmon.ui.entities.SortingTypes
+import ru.nm17.narodmon.ui.navHost.MainScreenSealed
 import ru.nm17.narodmon.ui.theme.NarodMonTheme
 import ru.nm17.narodmon.ui.toChipTitle
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SensorsScreen(navController: NavController, onSettingsClick: () -> Unit) {
+fun SensorsScreen(outerNavController: NavController) {
 
     var searchQuery by remember { mutableStateOf("") }
     var searchActive by remember { mutableStateOf(false) }
@@ -213,7 +212,7 @@ fun SensorsScreen(navController: NavController, onSettingsClick: () -> Unit) {
                 onSearch = { searchActive = false },
                 placeholder = { Text(stringResource(R.string.search_sensors)) },
                 trailingIcon = {
-                    IconButton(onClick = { onSettingsClick.invoke() }) {
+                    IconButton(onClick = { outerNavController.navigate(MainScreenSealed.Settings.route) }) {
                         Icon(
                             Icons.Outlined.Settings,
                             contentDescription = stringResource(R.string.settings)
@@ -256,6 +255,6 @@ fun SensorsScreen(navController: NavController, onSettingsClick: () -> Unit) {
 @Composable
 fun PreviewNewSensors() {
     NarodMonTheme {
-        SensorsScreen(rememberNavController()) {}
+        SensorsScreen(rememberNavController())
     }
 }

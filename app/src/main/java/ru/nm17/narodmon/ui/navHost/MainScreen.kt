@@ -66,9 +66,7 @@ fun MainScreen(outerNavController: NavController) {
             Modifier.padding(it)
         ) {
             composable(MainScreenSealed.Sensors.route) {
-                SensorsScreen(navController) {
-                    outerNavController.navigate("settings")
-                }
+                SensorsScreen(outerNavController)
             }
             composable(MainScreenSealed.Webcams.route) { WebCamsScreen(navController) }
             composable(MainScreenSealed.Messages.route) { }
