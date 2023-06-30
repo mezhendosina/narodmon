@@ -1,2 +1,2 @@
 # narodmon
-Новый Ui\UX для сайта [narodmon.ru](https://narodmon.ru)
+Новый Ui\UX для сайта [narodmon.ru](https://narodmon.ru) на Android
