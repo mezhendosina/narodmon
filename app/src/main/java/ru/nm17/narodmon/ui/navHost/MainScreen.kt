@@ -35,7 +35,6 @@ fun MainScreen(outerNavController: NavController) {
     Scaffold(
         bottomBar = {
             NavigationBar {
-
                 items.forEach { screen ->
                     NavigationBarItem(
                         selected = navController.currentDestination?.route == screen.route,

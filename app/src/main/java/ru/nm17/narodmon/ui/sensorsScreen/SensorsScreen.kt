@@ -124,7 +124,7 @@ fun SensorsScreen(outerNavController: NavController) {
         }
 
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
