@@ -8,6 +8,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -16,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import ru.nm17.narodmon.ui.sensorsScreen.SensorsScreen
 import ru.nm17.narodmon.ui.theme.NarodMonTheme
@@ -31,13 +33,13 @@ val items = listOf(
 @Composable
 fun MainScreen(outerNavController: NavController) {
     val navController = rememberNavController()
-
+    val dest by navController.currentBackStackEntryAsState()
     Scaffold(
         bottomBar = {
             NavigationBar {
                 items.forEach { screen ->
                     NavigationBarItem(
-                        selected = navController.currentDestination?.route == screen.route,
+                        selected = dest?.destination?.route == screen.route,
                         onClick = {
                             navController.navigate(screen.route) {
                                 popUpTo(navController.graph.findStartDestination().id) {
